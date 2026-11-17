@@ -1,0 +1,32 @@
+name: Cypress E2E Tests
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+    paths:
+      - 'cypress-project/**'
+      - '.github/workflows/cypress.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'cypress-project/**'
+      - '.github/workflows/cypress.yml'
+  workflow_dispatch:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v7
+        with:
+          working-directory: cypress-project
+          browser: chrome
+          command: npx cypress run
